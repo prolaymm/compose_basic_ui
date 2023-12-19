@@ -1,0 +1,67 @@
+[
+  {
+    "id": 1,
+    "name": "Clothes",
+    "image": "https://i.imgur.com/QkIa5tT.jpeg",
+    "creationAt": "2023-12-18T07:49:41.000Z",
+    "updatedAt": "2023-12-18T07:49:41.000Z"
+  },
+  {
+    "id": 2,
+    "name": "Electronics",
+    "image": "https://i.imgur.com/ZANVnHE.jpeg",
+    "creationAt": "2023-12-18T07:49:41.000Z",
+    "updatedAt": "2023-12-18T07:49:41.000Z"
+  },
+  {
+    "id": 3,
+    "name": "Furniture",
+    "image": "https://i.imgur.com/Qphac99.jpeg",
+    "creationAt": "2023-12-18T07:49:41.000Z",
+    "updatedAt": "2023-12-18T07:49:41.000Z"
+  },
+  {
+    "id": 4,
+    "name": "Shoes",
+    "image": "https://i.imgur.com/qNOjJje.jpeg",
+    "creationAt": "2023-12-18T07:49:41.000Z",
+    "updatedAt": "2023-12-18T07:49:41.000Z"
+  },
+  {
+    "id": 5,
+    "name": "Miscellaneous",
+    "image": "https://i.imgur.com/BG8J0Fj.jpg",
+    "creationAt": "2023-12-18T07:49:41.000Z",
+    "updatedAt": "2023-12-18T07:49:41.000Z"
+  },
+  {
+    "id": 7,
+    "name": "Plants",
+    "image": "https://cdn.pixabay.com/photo/2016/11/18/17/20/flowers-1835619_960_720.jpg",
+    "creationAt": "2023-12-18T08:46:46.000Z",
+    "updatedAt": "2023-12-18T08:46:46.000Z"
+  },
+  {
+    "id": 23,
+    "name": "cars",
+    "image": "https://picsum.photos/id/237/200/300",
+    "creationAt": "2023-12-18T12:11:25.000Z",
+    "updatedAt": "2023-12-18T12:11:25.000Z"
+  },
+  {
+    "id": 29,
+    "name": "kdekkwkw",
+    "image": "https://picsum.photos/seed/picsum/200/300",
+    "creationAt": "2023-12-18T14:30:37.000Z",
+    "updatedAt": "2023-12-18T14:30:37.000Z"
+  },
+  {
+    "id": 31,
+    "name": "aaaaaa",
+    "image": "https://picsum.photos/200/300?grayscale",
+    "creationAt": "2023-12-18T14:31:13.000Z",
+    "updatedAt": "2023-12-18T14:32:01.000Z"
+  }
+]
+
+

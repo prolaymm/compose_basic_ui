@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">LearningAppCompose</string>
+    <string name="sign_in">Sing In</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="search">Search here</string>
+</resources>
