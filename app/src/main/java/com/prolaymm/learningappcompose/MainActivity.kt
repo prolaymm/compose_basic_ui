@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.prolaymm.learningappcompose.presentation.screens.DetailScreen
 import com.prolaymm.learningappcompose.presentation.screens.HomeScreen
 import com.prolaymm.learningappcompose.presentation.screens.LoginScreen
 import com.prolaymm.learningappcompose.ui.theme.LearningAppComposeTheme
@@ -28,7 +29,8 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                   //  LoginScreen()
-                    HomeScreen()
+                 //   HomeScreen()
+                    DetailScreen()
                 }
             }
         }
