@@ -46,7 +46,7 @@ fun CustomNetworkImage(imageUrl : String,modifier: Modifier) {
         },
 
         modifier= modifier
-            .clip(shape = RoundedCornerShape(12.dp))
-            .fillMaxSize()
+
+
     )
 }

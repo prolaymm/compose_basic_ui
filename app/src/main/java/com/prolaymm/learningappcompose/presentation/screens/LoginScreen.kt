@@ -37,6 +37,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.prolaymm.learningappcompose.R
 import com.prolaymm.learningappcompose.presentation.compose.CustomButton
 import com.prolaymm.learningappcompose.presentation.compose.CustomTextField
@@ -45,7 +46,7 @@ import com.prolaymm.learningappcompose.ui.theme.PrimaryColor
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun LoginScreen() {
+fun LoginScreen(navController: NavController) {
     val context = LocalContext.current
     var emailController by remember {
         mutableStateOf("")
