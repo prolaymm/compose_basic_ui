@@ -3,6 +3,7 @@ package com.prolaymm.learningappcompose.presentation.screens
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -51,22 +52,30 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavController
+import androidx.navigation.navArgument
 import com.google.gson.reflect.TypeToken
 import com.prolaymm.learningappcompose.R
 import com.prolaymm.learningappcompose.presentation.compose.CategoryCard
 import com.prolaymm.learningappcompose.presentation.compose.CourseCard
 import com.prolaymm.learningappcompose.presentation.compose.CustomTextField
+import com.prolaymm.learningappcompose.presentation.domain.CustomNavTyperParser
+import com.prolaymm.learningappcompose.presentation.domain.Post
 import com.prolaymm.learningappcompose.presentation.domain.data.CustomJsonReader
+import com.prolaymm.learningappcompose.presentation.domain.data.NavDataSource
+import com.prolaymm.learningappcompose.presentation.domain.extension.fromJson
 import com.prolaymm.learningappcompose.presentation.domain.extension.toJson
 import com.prolaymm.learningappcompose.presentation.domain.vos.CategoryVo
 import com.prolaymm.learningappcompose.presentation.domain.vos.CourseVo
+import com.prolaymm.learningappcompose.presentation.navigation.NavHelper
 import com.prolaymm.learningappcompose.ui.theme.HintColor
 import com.prolaymm.learningappcompose.ui.theme.PrimaryColor
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun HomeScreen() {
+fun HomeScreen(navController: NavController) {
     var searchTextController by remember {
         mutableStateOf("")
     }
@@ -100,11 +109,7 @@ fun HomeScreen() {
         )
         onReadCourse()
 
-
     }
-
-
-
 
     Scaffold(
 
@@ -119,102 +124,175 @@ fun HomeScreen() {
                     }
 
 
-            })
+                })
         }
     ) { paddingValues ->
-       Column(
-           modifier = Modifier
-               //  .verticalScroll(rememberScrollState())
-               .padding(paddingValues)
-       ) {
-           CustomTextField(
-               textController = searchTextController,
-               hintText = stringResource(id = R.string.search),
-               visibility = true,
-               trailingIcon = Icons.Outlined.Search,
-               modifier = Modifier
-                   .fillMaxWidth()
-                   .padding(top = 16.dp, start = 16.dp, end = 16.dp)
-           ) {
-               searchTextController = it
-           }
-           LazyColumn(
+        Column(
             modifier = Modifier
                 //  .verticalScroll(rememberScrollState())
-                //  .padding(paddingValues)
-                .padding(horizontal = 16.dp)
-                .fillMaxSize()
+                .padding(paddingValues)
         ) {
+            CustomTextField(
+                textController = searchTextController,
+                hintText = stringResource(id = R.string.search),
+                visibility = true,
+                trailingIcon = Icons.Outlined.Search,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp, start = 16.dp, end = 16.dp)
+            ) {
+                searchTextController = it
+            }
+            LazyColumn(
+                modifier = Modifier
+                    //  .verticalScroll(rememberScrollState())
+                    //  .padding(paddingValues)
+                    .padding(horizontal = 16.dp)
+                    .fillMaxSize()
+            ) {
 
 
-               item {
-                   Text(
-                       text = "Category",
-                       style = MaterialTheme.typography.titleLarge,
-                       modifier = Modifier.padding(top = 16.dp)
-                   )
-               }
-               item { Spacer(modifier = Modifier.height(12.dp)) }
-               item {
-                   LazyRow {
-                       itemsIndexed(categoryList) { index, vo ->
-                           CategoryCard(
-                               modifier = Modifier
-                                   .padding(6.dp)
-                                   .height(130.dp), categoryVo = vo
-                           ) {
+                item {
+                    Text(
+                        text = "Category",
+                        style = MaterialTheme.typography.titleLarge,
+                        modifier = Modifier.padding(top = 16.dp)
+                    )
+                }
+                item { Spacer(modifier = Modifier.height(12.dp)) }
+                item {
+                    LazyRow {
+                        itemsIndexed(categoryList) { index, vo ->
+                            CategoryCard(
+                                modifier = Modifier
+                                    .padding(6.dp)
+                                    .height(130.dp), categoryVo = vo
+                            ) {
 
-                           }
-                       }
-                   } ///lazyrow
-               }
+                            }
+                        }
+                    } ///lazyrow
+                }
 
-              item {   Row(
-                   modifier = Modifier
-                       .fillMaxWidth(),
-                   horizontalArrangement = Arrangement.SpaceBetween,
-                   verticalAlignment = Alignment.CenterVertically
+                item {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
 
-               ) {
-                   Text(
-                       text = "Category",
-                       style = MaterialTheme.typography.titleLarge,
-                       modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
-                   )
-                   Text(
-                       text = "Category",
-                       style = MaterialTheme.typography.titleSmall,
-                       color = PrimaryColor,
-                       modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
-                   )
-               } ///row body
-           }
+                    ) {
+                        Text(
+                            text = "Category",
+                            style = MaterialTheme.typography.titleLarge,
+                            modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
+                        )
+                        Text(
+                            text = "Category",
+                            style = MaterialTheme.typography.titleSmall,
+                            color = PrimaryColor,
+                            modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
+                        )
+                    } ///row body
+                }
 
-              OnlineCourses(courseVo)
+                OnlineCourses(courseVo){
 
 
 
+                    NavDataSource.addCourseVo(it)
+                    navController.navigate("course/${CustomNavTyperParser<Post>().serializeAsValue(Post(it.publishedTitle?:"jdajdjajdajdj"))}")
+                }
+
+                item {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+
+                    ) {
+                        Text(
+                            text = "Category",
+                            style = MaterialTheme.typography.titleLarge,
+                            modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
+                        )
+                        Text(
+                            text = "Category",
+                            style = MaterialTheme.typography.titleSmall,
+                            color = PrimaryColor,
+                            modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
+                        )
+                    } ///row body
+                }
+                OnlineCourses(courseVo, modifier = Modifier.padding()){
+
+                    navController.navigate("course/dadadadada")
+                }
+                item {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+
+                    ) {
+                        Text(
+                            text = "Category",
+                            style = MaterialTheme.typography.titleLarge,
+                            modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
+                        )
+                        Text(
+                            text = "Category",
+                            style = MaterialTheme.typography.titleSmall,
+                            color = PrimaryColor,
+                            modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
+                        )
+                    } ///row body
+                }
+
+                OnlineCourses(courseVo){
+
+
+                    navController.navigate("course/dadjajdjajdajd")
+                }
+
+
+            }
         }
-    }
 
     }
 
 }
 
 
+@Composable
+fun TestRoute(data : String,navBackStackEntry: NavBackStackEntry?=null) {
+
+
+    Text("data ${NavDataSource.courseVo}")
+}
+
 @OptIn(ExperimentalLayoutApi::class)
-fun LazyListScope.OnlineCourses(courseVo: List<CourseVo>) {
+fun LazyListScope.OnlineCourses(courseVo: List<CourseVo>,modifier: Modifier = Modifier,onClick : (CourseVo)-> Unit) {
 
-  item {
-      FlowRow(modifier = Modifier.fillMaxWidth(),
-          horizontalArrangement = Arrangement.SpaceBetween
-      ) {
-         courseVo.forEachIndexed { index, vo ->
-              CourseCard(courseVo = courseVo[index], modifier = Modifier.padding(vertical = 6.dp).width(180.dp).height(220.dp))
+    item {
+       LazyRow(modifier){
+           itemsIndexed(courseVo){ index, vo ->
+               CourseCard(
+                   courseVo = courseVo[index],
+                   modifier = Modifier
+                       .padding(vertical = 6.dp, horizontal = 6.dp)
+                       .width(180.dp)
+                       .height(220.dp)
+                       .clickable {
+                           onClick(vo)
+                       }
+               )
 
-         }
-      }
-   }
+           }
+       }
+    }
 
 
 }
